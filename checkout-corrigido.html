@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finalizar Pedido | Deveu Perdeu</title>
+<style>
+:root{
+  --orange:#ff6b00;
+  --dark:#121316;
+  --green:#16a34a;
+  --border:#e5e5e5;
+  --muted:#777;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#f5f4f1;
+  color:var(--dark);
+  font-family:Inter,Arial,sans-serif;
+  font-size:13px;
+}
+header{
+  background:var(--dark);
+  color:white;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:-.6px;
+}
+.secure{font-size:11px;font-weight:700}
+.banner{
+  background:var(--orange);
+  color:white;
+  text-align:center;
+  padding:11px;
+  font-size:12px;
+  font-weight:700;
+}
+main{
+  max-width:440px;
+  margin:auto;
+  padding:16px 12px 35px;
+}
+.progress{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:15px;
+  color:#666;
+  font-size:11px;
+}
+.progress span{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.progress b{
+  background:#161616;
+  color:white;
+  width:19px;
+  height:19px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  font-size:10px;
+}
+.progress i{
+  width:23px;
+  border-top:1px dashed #bbb;
+}
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:0 2px 8px #00000008;
+}
+.heading{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  cursor:pointer;
+}
+.number{
+  background:#171717;
+  color:white;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  flex-shrink:0;
+}
+.number.done{background:#22c55e}
+.heading h2{
+  font-size:15px;
+  margin:0;
+  font-weight:800;
+}
+.heading p{
+  color:var(--muted);
+  font-size:11px;
+  margin:4px 0 0;
+}
+.chevron{
+  margin-left:auto;
+  color:var(--orange);
+  font-size:19px;
+}
+.content{margin-top:16px}
+.hidden{display:none!important}
+label{
+  display:block;
+  font-weight:700;
+  font-size:11px;
+  margin:12px 0 6px;
+}
+input,select{
+  width:100%;
+  height:42px;
+  padding:10px;
+  border:1px solid #dedede;
+  border-radius:8px;
+  background:white;
+  font:inherit;
+  outline:none;
+}
+input:focus,select:focus{
+  border-color:var(--orange);
+}
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.btn{
+  width:100%;
+  padding:15px;
+  background:var(--orange);
+  border:0;
+  border-radius:9px;
+  color:white;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+  margin-top:15px;
+}
+.btn:disabled{
+  background:#bbb;
+  cursor:not-allowed;
+}
+.shipping{
+  border:1px solid #ddd;
+  border-radius:9px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:9px;
+  background:#fff9f4;
+}
+.shipping input{
+  width:16px;
+  height:16px;
+  accent-color:var(--orange);
+}
+.shipping div{flex:1}
+.shipping strong{display:block}
+.shipping small{
+  display:block;
+  margin-top:4px;
+  color:#777;
+}
+.green{color:var(--green);font-weight:800}
+.orange{color:var(--orange);font-weight:800}
+.pix-option{
+  background:#ebfff3;
+  border:1px solid #bde8ce;
+  padding:14px;
+  border-radius:9px;
+}
+.pix-option strong{font-size:13px}
+.pix-option p{
+  font-size:11px;
+  color:#555;
+  margin:6px 0 0;
+}
+.summary-title{
+  margin:0 0 14px;
+  font-size:14px;
+}
+.product{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding-bottom:14px;
+  border-bottom:1px solid #eee;
+}
+.product-image{
+  width:65px;
+  height:65px;
+  background:#fff0e4;
+  border-radius:9px;
+  display:grid;
+  place-items:center;
+  font-size:31px;
+  flex-shrink:0;
+}
+.product-name{
+  font-size:12px;
+  font-weight:800;
+}
+.product-price{
+  color:var(--orange);
+  font-size:18px;
+  font-weight:900;
+  margin-top:6px;
+}
+.line{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:13px;
+  font-size:12px;
+}
+.line.total{
+  border-top:1px solid #eee;
+  padding-top:14px;
+  font-size:17px;
+  font-weight:900;
+}
+.trust{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.trust div{
+  background:white;
+  border:1px solid #eee;
+  border-radius:10px;
+  padding:13px 6px;
+  text-align:center;
+  font-size:10px;
+}
+.trust strong{
+  display:block;
+  margin:7px 0 4px;
+}
+.trust small{color:#888;font-size:9px}
+.note{
+  color:#777;
+  font-size:11px;
+  line-height:1.6;
+}
+footer{
+  text-align:center;
+  color:#999;
+  padding:25px;
+  font-size:10px;
+}
+@media(max-width:400px){
+  header{padding:13px 10px}
+  .logo{font-size:15px}
+  .secure{font-size:9px}
+}
+
+/* Seletores do checkout original: frete somente em Entrega e upgrade somente em Pagamento */
+.shipping,.upgrade-option{cursor:pointer;transition:background .2s,border-color .2s}
+.shipping{margin:7px 0;background:white;font-weight:normal}
+.shipping:has(input:checked),.upgrade-option:has(input:checked){border-color:#ff6b00;background:#fff5ed}
+.shipping input,.upgrade-option input{flex-shrink:0;width:16px;height:16px;accent-color:#ff6b00;padding:0}
+.shipping strong,.upgrade-option strong{font-size:11px}
+.shipping small,.upgrade-option small{display:block;font-size:10px;color:#777;margin-top:4px}
+.shipping>strong,.shipping>span,.upgrade-option>span{white-space:nowrap;font-size:10px}
+.upgrade-box{border:1px dashed #ff8a39;border-radius:10px;padding:10px;margin-top:12px;background:#fffaf6}
+.upgrade-title{display:block;font-size:10px;color:#ff6b00;margin-bottom:10px}
+.upgrade-option{display:flex;align-items:center;gap:9px;border:1px solid #e8e8e8;border-radius:9px;padding:12px 8px;margin:7px 0;background:white;font-weight:normal}
+.upgrade-option div{flex:1;min-width:0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">DEVEU PERDEU</div>
+  <div class="secure">🔒 Pagamento 100% seguro</div>
+</header>
+
+<div class="banner">
+  ✓ Preencha corretamente seus dados para receber o pedido
+</div>
+
+<main>
+
+<div class="progress">
+  <span><b>1</b> Dados</span>
+  <i></i>
+  <span><b>2</b> Entrega</span>
+  <i></i>
+  <span><b>3</b> Pagamento</span>
+</div>
+
+<!-- ETAPA 1 -->
+<section class="card">
+  <div class="heading" onclick="openStep(1)">
+    <div class="number" id="number1">1</div>
+    <div>
+      <h2>Dados pessoais</h2>
+      <p>Precisamos apenas das informações essenciais.</p>
+    </div>
+    <div class="chevron">⌄</div>
+  </div>
+
+  <div class="content" id="step1">
+    <form id="form1">
+      <label>Nome completo</label>
+      <input id="name" required autocomplete="name"
+        placeholder="Seu nome completo">
+
+      <div class="two">
+        <div>
+          <label>E-mail</label>
+          <input id="email" type="email" required
+            autocomplete="email" placeholder="seu@email.com">
+        </div>
+        <div>
+          <label>WhatsApp</label>
+          <input id="phone" type="tel" required
+            autocomplete="tel" placeholder="(11) 99999-9999">
+        </div>
+      </div>
+
+      <label>CPF</label>
+      <input id="cpf" required inputmode="numeric"
+        maxlength="14" placeholder="000.000.000-00">
+
+      <button class="btn" type="submit">
+        CONTINUAR →
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ETAPA 2 -->
+<section class="card">
+  <div class="heading" onclick="openStep(2)">
+    <div class="number" id="number2">2</div>
+    <div>
+      <h2>Entrega</h2>
+      <p>Informe o endereço para envio.</p>
+    </div>
+    <div class="chevron">⌄</div>
+  </div>
+
+  <div class="content hidden" id="step2">
+    <form id="form2">
+      <label>CEP</label>
+      <input id="cep" required inputmode="numeric"
+        maxlength="9" placeholder="00000-000">
+
+      <label>Rua / Avenida</label>
+      <input id="street" required
+        autocomplete="address-line1"
+        placeholder="Nome da rua">
+
+      <div class="two">
+        <div>
+          <label>Número</label>
+          <input id="number" required placeholder="123">
+        </div>
+        <div>
+          <label>Complemento</label>
+          <input id="complement" placeholder="Apto, bloco...">
+        </div>
+      </div>
+
+      <div class="two">
+        <div>
+          <label>Bairro</label>
+          <input id="district" required>
+        </div>
+        <div>
+          <label>Cidade</label>
+          <input id="city" required>
+        </div>
+      </div>
+
+      <label>Estado</label>
+      <select id="state" required>
+        <option value="">Selecione o estado</option>
+      </select>
+
+     
+<label>Escolha o frete:</label>
+<div id="shippingOptions">
+  <label class="shipping"><input type="radio" name="shipping" value="gratis" checked><div><strong>🎁 Frete Grátis</strong><small>4 a 7 dias úteis</small></div><span class="green">Grátis</span></label>
+  <label class="shipping"><input type="radio" name="shipping" value="jadlog"><div><strong>🚚 JadLog</strong><small>3 a 5 dias úteis</small></div><strong>R$ 9,90</strong></label>
+  <label class="shipping"><input type="radio" name="shipping" value="retirada"><div><strong>📍 Retirada no Shopping Iguatemi</strong><small>Retirada mediante confirmação</small></div><span class="green">Grátis</span></label>
+  <label class="shipping"><input type="radio" name="shipping" value="full"><div><strong>⚡ Full 24hrs</strong><small>Entrega em até 24 horas</small></div><strong>R$ 19,90</strong></label>
+</div>
+<button class="btn" type="submit">CONTINUAR PARA PAGAMENTO →</button>
+</form></div></section>
+
+<!-- ETAPA 3: PAGAMENTO -->
+<section class="card">
+  <div class="heading" onclick="openStep(3)"><div class="number" id="number3">3</div><div><h2>Pagamento</h2><p>Escolha a forma de pagamento.</p></div><div class="chevron">⌄</div></div>
+  <div class="content hidden" id="step3">
+    <div class="pix-option"><strong>💠 PIX — Aprovação imediata</strong><p>Pague com Pix e receba as instruções após a confirmação.</p></div>
+    <div class="upgrade-box">
+      <strong class="upgrade-title">🔥 APROVEITE! ADICIONE UM UPGRADE AO SEU PEDIDO:</strong>
+      <label class="upgrade-option"><input type="radio" name="upgrade" value="premium"><div><strong>Upgrade Premium</strong><small>Produtos premium garantidos na caixa</small></div><span class="orange">+ R$ 19,90</span></label>
+      <label class="upgrade-option"><input type="radio" name="upgrade" value="dobro"><div><strong>Caixa em Dobro</strong><small>Receba o dobro de produtos na caixa</small></div><span class="orange">+ R$ 25,90</span></label>
+      <label class="upgrade-option"><input type="radio" name="upgrade" value="iphone"><div><strong>Um iPhone Garantido</strong><small>Adicional conforme condições da oferta</small></div><span class="orange">+ R$ 79,00</span></label>
+      <label class="upgrade-option"><input type="radio" name="upgrade" value="nenhum" checked><div><strong>Não quero nenhum upgrade</strong></div></label>
+    </div>
+    <div class="line total"><span>Total do pedido</span><span class="orange" id="paymentTotal"></span></div>
+    <button class="btn" id="payButton" type="button" disabled>🔒 FINALIZAR PEDIDO</button>
+    <p class="note">Pagamento Pix indisponível nesta versão até validar a integração segura com a SkalePayments.</p>
+  </div>
+</section>
+
+<!-- RESUMO -->
+<section class="card">
+  <h3 class="summary-title">Resumo do pedido</h3>
+
+  <div class="product">
+    <div class="product-image">   <img id="boxImage" alt="Caixa surpresa selecionada"        style="width:100%;height:100%;object-fit:contain"> </div>
+    <div>
+      <div class="product-name" id="productName"></div>
+      <div class="product-price" id="productPrice"></div>
+    </div>
+  </div>
+
+  <div class="line">
+    <span id="quantityLabel"></span>
+    <span id="originalPrice"></span>
+  </div>
+
+  <div class="line">
+    <span class="orange">Desconto promocional</span>
+    <span class="green" id="discount"></span>
+  </div>
+
+  <div class="line">
+    <span>Subtotal</span>
+    <span id="subtotal"></span>
+  </div>
+
+  <div class="line">
+    <span>Frete</span>
+    <span class="green" id="shippingAmount">GRÁTIS</span>
+  </div>
+
+<div class="line"><span>Adicional selecionado</span><span id="upgradeAmount">R$ 0,00</span></div>
+<div class="line total"><span>Total</span><span class="orange" id="grandTotal"></span></div>
+</section>
+
+<div class="trust">
+  <div>
+    🔒
+    <strong>Compra Segura</strong>
+    <small>Pagamento protegido</small>
+  </div>
+  <div>
+    🚚
+    <strong>Envio rápido</strong>
+    <small>Acompanhe seu pedido</small>
+  </div>
+  <div>
+    🛡️
+    <strong>Site oficial</strong>
+    <small>Atendimento ao cliente</small>
+  </div>
+</div>
+
+<footer>
+  © Deveu Perdeu — Todos os direitos reservados.
+</footer>
+
+</main>
+
+<script>
+/* NOVE COMBINAÇÕES DE PREÇOS, EM CENTAVOS */
+const catalog = {
+  bronze: {
+    name: "Bronze",
+    prices: {1:4970,2:6461,3:8201}
+  },
+  prata: {
+    name: "Prata",
+    prices: {1:7990,2:10387,3:13184}
+  },
+  ouro: {
+    name: "Ouro",
+    prices: {1:9990,2:12987,3:16484}
+  }
+};
+
+/* RECEBE O PLANO DA PÁGINA DE VENDAS */
+const params = new URLSearchParams(location.search);
+
+const requestedPlan =
+  (params.get("plano") || "bronze").toLowerCase();
+
+const plan = Object.hasOwn(catalog,requestedPlan)
+  ? requestedPlan : "bronze";
+
+const requestedQty = Number(params.get("qtd") || 1);
+
+const qty = [1,2,3].includes(requestedQty)
+  ? requestedQty : 1;
+
+const selected = catalog[plan];
+const finalPrice = selected.prices[qty];
+const unitPrice = selected.prices[1];
+const originalPrice = unitPrice * qty;
+const discountValue = originalPrice - finalPrice;
+
+function money(cents){
+  return (cents/100).toLocaleString("pt-BR",{
+    style:"currency",
+    currency:"BRL"
+  });
+}
+
+function text(id,value){
+  document.getElementById(id).textContent=value;
+}
+
+/* ATUALIZA O RESUMO AUTOMATICAMENTE */
+text("productName",
+  qty+"x Caixa Surpresa "+selected.name);
+
+text("productPrice",money(finalPrice));
+text("quantityLabel",qty+" × "+money(unitPrice));
+text("originalPrice",money(originalPrice));
+text("discount","- "+money(discountValue));
+text("subtotal",money(finalPrice));
+text("grandTotal",money(finalPrice));
+text("paymentTotal",money(finalPrice));
+
+/* ESTADOS BRASILEIROS */
+const states = [
+"AC","AL","AP","AM","BA","CE","DF","ES","GO",
+"MA","MT","MS","MG","PA","PB","PR","PE","PI",
+"RJ","RN","RS","RO","RR","SC","SP","SE","TO"
+];
+
+states.forEach(uf=>{
+  const option=document.createElement("option");
+  option.value=uf;
+  option.textContent=uf;
+  document.getElementById("state").appendChild(option);
+});
+
+/* CONTROLE DAS ETAPAS */
+let completed=0;
+
+function openStep(step){
+  if(step>completed+1)return;
+
+  for(let i=1;i<=3;i++){
+    document.getElementById("step"+i)
+      .classList.toggle("hidden",i!==step);
+  }
+}
+
+function finishStep(step){
+  completed=Math.max(completed,step);
+
+  const circle=document.getElementById("number"+step);
+  circle.textContent="✓";
+  circle.classList.add("done");
+
+  if(step<3)openStep(step+1);
+}
+
+function digits(value){
+  return String(value).replace(/\D/g,"");
+}
+
+function validCPF(value){
+  const cpf=digits(value);
+
+  if(!/^\d{11}$/.test(cpf) ||
+     /^(\d)\1+$/.test(cpf))return false;
+
+  for(let length=9;length<=10;length++){
+    let sum=0;
+    for(let i=0;i<length;i++){
+      sum+=Number(cpf[i])*(length+1-i);
+    }
+    let check=(sum*10)%11;
+    if(check===10)check=0;
+    if(check!==Number(cpf[length]))return false;
+  }
+  return true;
+}
+
+/* VALIDAÇÃO DOS DADOS */
+document.getElementById("form1")
+  .addEventListener("submit",function(event){
+    event.preventDefault();
+
+    if(!this.reportValidity())return;
+
+    if(!validCPF(document.getElementById("cpf").value)){
+      alert("Informe um CPF válido.");
+      return;
+    }
+
+    const phone=digits(
+      document.getElementById("phone").value
+    );
+
+    if(phone.length<10 || phone.length>13){
+      alert("Informe um WhatsApp válido.");
+      return;
+    }
+
+    finishStep(1);
+  });
+
+/* VALIDAÇÃO DA ENTREGA */
+document.getElementById("form2")
+  .addEventListener("submit",function(event){
+    event.preventDefault();
+
+    if(!this.reportValidity())return;
+
+    const cep=digits(
+      document.getElementById("cep").value
+    );
+
+    if(cep.length!==8){
+      alert("Informe um CEP válido.");
+      return;
+    }
+
+    finishStep(2);
+  });
+
+/*
+INTEGRAÇÃO PIX PENDENTE:
+
+O servidor deverá:
+1. Receber plano e quantidade.
+2. Validar os dados do cliente.
+3. Recalcular o preço com o catálogo do servidor.
+4. Criar a cobrança pela SkalePayments.
+5. Retornar QR Code e Pix Copia e Cola.
+6. Verificar a confirmação do pagamento.
+
+Não colocar a chave secreta no HTML.
+*/
+  const boxImages = {
+  bronze: "/images/caixa-bronze-t0T6IVyk.png",
+  prata: "/images/caixa-prata-products--gTnqzrz.png",
+  ouro: "/images/caixa-ouro-products-DDvZz4Pc.png"
+};
+
+document.getElementById("boxImage").src = boxImages[plan];
+
+/* Frete e upgrades: preços em centavos. Validação no servidor necessária para cobrança real. */
+const shippingPrices={gratis:0,jadlog:990,retirada:0,full:1990};
+const upgradePrices={nenhum:0,premium:1990,dobro:2590,iphone:7900};
+function updateOrderTotal(){
+ const shipping=document.querySelector('input[name="shipping"]:checked')?.value||'gratis';
+ const upgrade=document.querySelector('input[name="upgrade"]:checked')?.value||'nenhum';
+ const freight=shippingPrices[shipping]??0;
+ const extra=upgradePrices[upgrade]??0;
+ const total=finalPrice+freight+extra;
+ document.getElementById('shippingAmount').textContent=freight?money(freight):'GRÁTIS';
+ text('upgradeAmount',money(extra));
+ text('grandTotal',money(total));
+ text('paymentTotal',money(total));
+}
+document.querySelectorAll('input[name="shipping"],input[name="upgrade"]').forEach(el=>el.addEventListener('change',updateOrderTotal));
+updateOrderTotal();
+</script>
+
+</body>
+</html>
